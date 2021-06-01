@@ -13,16 +13,28 @@ namespace WebServiceApp
     [ServiceContract]
     public interface IService1
     {
+        // Listado 
+        [OperationContract]
+        List<TriangleDTO> ListTriangles();
 
         [OperationContract]
-        string GetData(int value);
+        List<SquareDTO> ListSquares();
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        List<CircleDTO> ListCircles();
 
-        // TODO: agregue aquí sus operaciones de servicio
+        // Creacion
+        [OperationContract]
+        bool CreateTriangle(TriangleDTO Triangle);
+
+        [OperationContract]
+        bool CreateSquare(SquareDTO Square);
+        
+        [OperationContract]
+        bool CreateCircle(CircleDTO Circle);
 
        
+
     }
 
 

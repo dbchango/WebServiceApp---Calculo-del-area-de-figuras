@@ -15,24 +15,103 @@ namespace WebServiceApp
     public class Service1 : IService1
     {
         private readonly figuresContext DBContext = new figuresContext();
-        public string GetData(int value)
+        // Listados implementacion
+        public List<TriangleDTO> ListTriangles()
         {
-            return string.Format("You entered: {0}", value);
+            return DBContext.Triangle.Select(
+                s => new TriangleDTO
+                {
+                    Id = s.Id,
+                    Area = s.Area,
+                    SideA = s.SideA,
+                    SideB = s.SideB,
+                    SideC = s.SideC
+                }
+            ).ToList();
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public List<SquareDTO> ListSquares()
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            return DBContext.Square.Select(
+                s => new SquareDTO
+                {
+                    Id = s.Id,
+                    Base = s.Base,
+                    Width = s.Width,
+                    Height = s.Height
+                }
+            ).ToList();
         }
 
-        
+        public List<CircleDTO> ListCircles()
+        {
+            return DBContext.Circle.Select(
+                s => new CircleDTO
+                {
+                    Id = s.Id,
+                    Radius = s.Radius,
+                    Area = s.Area
+                }
+            ).ToList();
+        }
+
+        // Creacion
+        public bool CreateTriangle(TriangleDTO Triangle)
+        {
+            try
+            {
+                var entity = new Triangle()
+                {
+                    Area = Triangle.Area,
+                    SideA = Triangle.SideA,
+                    SideB = Triangle.SideB,
+                    SideC = Triangle.SideC
+                };
+                DBContext.Triangle.Add(entity);
+                DBContext.SaveChangesAsync();
+                return true;
+
+            }catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool CreateSquare(SquareDTO Square)
+        {
+            try
+            {
+                var entity = new Square()
+                {
+                    Base = Square.Base,
+                    Height = Square.Height,
+                    Width = Square.Width
+                };
+                DBContext.Square.Add(entity);
+                DBContext.SaveChangesAsync();
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool CreateCircle(CircleDTO Circle)
+        {
+            try
+            {
+                var entity = new Circle()
+                {
+                    Area = Circle.Area,
+                    Radius = Circle.Radius
+                };
+                DBContext.Circle.Add(entity);
+                DBContext.SaveChangesAsync();
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
