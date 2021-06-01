@@ -36,7 +36,7 @@ namespace WebServiceApp
                 s => new SquareDTO
                 {
                     Id = s.Id,
-                    Base = s.Base,
+                    Area = s.Area,
                     Width = s.Width,
                     Height = s.Height
                 }
@@ -56,10 +56,12 @@ namespace WebServiceApp
         }
 
         // Creacion
-        public bool CreateTriangle(TriangleDTO Triangle)
+        public dynamic CreateTriangle(TriangleDTO Triangle)
         {
             try
             {
+                double s = ((double)Triangle.SideA + (double)Triangle.SideB + (double)Triangle.SideC) / 2;
+                Triangle.Area = Math.Sqrt(s*(s- (double)Triangle.SideA) * (s - (double)Triangle.SideB) * (s - (double)Triangle.SideC));
                 var entity = new Triangle()
                 {
                     Area = Triangle.Area,
@@ -69,37 +71,40 @@ namespace WebServiceApp
                 };
                 DBContext.Triangle.Add(entity);
                 DBContext.SaveChangesAsync();
-                return true;
+                return entity.Area;
 
             }catch(Exception ex)
             {
-                return false;
+                return ex.Message;
             }
         }
 
-        public bool CreateSquare(SquareDTO Square)
+        public dynamic CreateSquare(SquareDTO Square)
         {
             try
             {
+                Square.Area = Square.Width * Square.Height;
                 var entity = new Square()
                 {
-                    Base = Square.Base,
+                    Area = Square.Area,
                     Height = Square.Height,
                     Width = Square.Width
                 };
                 DBContext.Square.Add(entity);
                 DBContext.SaveChangesAsync();
-                return true;
+                return entity.Area;
+                
             }catch(Exception ex)
             {
-                return false;
+                return ex.Message;
             }
         }
 
-        public bool CreateCircle(CircleDTO Circle)
+        public dynamic CreateCircle(CircleDTO Circle)
         {
             try
             {
+                Circle.Area = Math.PI * Math.Pow((double)Circle.Radius, 2);
                 var entity = new Circle()
                 {
                     Area = Circle.Area,
@@ -107,11 +112,50 @@ namespace WebServiceApp
                 };
                 DBContext.Circle.Add(entity);
                 DBContext.SaveChangesAsync();
-                return true;
+                return entity.Area;
             }catch(Exception ex)
             {
-                return false;
+                return ex.Message;
             }
+        }
+
+        public TriangleDTO GetTriangleById(int Id)
+        {
+            return DBContext.Triangle.Select(
+                s => new TriangleDTO
+                {
+                    Id = s.Id,
+                    SideA = s.SideA,
+                    SideB = s.SideB,
+                    SideC = s.SideC,
+                    Area = s.Area
+                }
+            ).FirstOrDefault(s => s.Id == Id);
+        }
+
+        public SquareDTO GetSquareById(int Id)
+        {
+            return DBContext.Square.Select(
+                s => new SquareDTO
+                {
+                    Id = s.Id,
+                    Area = s.Area,
+                    Height = s.Height,
+                    Width = s.Width
+                }
+            ).FirstOrDefault(s => s.Id == Id);
+        }
+
+        public CircleDTO GetCircleById(int Id)
+        {
+            return DBContext.Circle.Select(
+                s => new CircleDTO
+                {
+                    Id = s.Id,
+                    Area = s.Area,
+                    Radius = s.Radius
+                }
+                ).FirstOrDefault(s => s.Id == Id);
         }
     }
 }

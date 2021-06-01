@@ -25,16 +25,23 @@ namespace WebServiceApp
 
         // Creacion
         [OperationContract]
-        bool CreateTriangle(TriangleDTO Triangle);
+        dynamic CreateTriangle(TriangleDTO Triangle);
 
         [OperationContract]
-        bool CreateSquare(SquareDTO Square);
+        dynamic CreateSquare(SquareDTO Square);
         
         [OperationContract]
-        bool CreateCircle(CircleDTO Circle);
+        dynamic CreateCircle(CircleDTO Circle);
 
-       
+        // Consulta
+        [OperationContract]
+        TriangleDTO GetTriangleById(int ID);
 
+        [OperationContract]
+        SquareDTO GetSquareById(int Id);
+
+        [OperationContract]
+        CircleDTO GetCircleById(int Id);
     }
 
 

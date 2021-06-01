@@ -49,7 +49,7 @@ namespace WebServiceApp.Models
             {
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Base).HasColumnName("base");
+                entity.Property(e => e.Area).HasColumnName("area");
 
                 entity.Property(e => e.Height).HasColumnName("height");
 

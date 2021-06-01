@@ -8,7 +8,7 @@ namespace WebServiceApp.DTO
     public class SquareDTO
     {
         public int Id { get; set; }
-        public double? Base { get; set; }
+        public double? Area { get; set; }
         public double? Height { get; set; }
         public double? Width { get; set; }
     }
