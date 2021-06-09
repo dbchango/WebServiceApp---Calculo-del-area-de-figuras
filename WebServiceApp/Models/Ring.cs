@@ -7,11 +7,11 @@ using System.Collections.Generic;
 
 namespace WebServiceApp.Models
 {
-    public partial class Square
+    public partial class Ring
     {
         public int Id { get; set; }
-        public double? Side { get; set; }
         public double? Area { get; set; }
+        public double? Radius { get; set; }
         public double? Perimeter { get; set; }
     }
 }

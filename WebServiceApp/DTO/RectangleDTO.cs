@@ -5,13 +5,12 @@ using System.Web;
 
 namespace WebServiceApp.DTO
 {
-    public class TriangleDTO
+    public class RectangleDTO
     {
         public int Id { get; set; }
+        public double? Height { get; set; }
+        public double? Width { get; set; }
         public double? Area { get; set; }
-        public double? SideA { get; set; }
-        public double? SideB { get; set; }
-        public double? SideC { get; set; }
         public double? Perimeter { get; set; }
     }
 }

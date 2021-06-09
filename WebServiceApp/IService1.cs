@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using WebServiceApp.DTO;
+using WebServiceApp.Models;
 
 namespace WebServiceApp
 {
@@ -21,17 +22,23 @@ namespace WebServiceApp
         List<SquareDTO> ListSquares();
 
         [OperationContract]
-        List<CircleDTO> ListCircles();
+        List<RingDTO> ListRings();
+
+        [OperationContract]
+        List<RectangleDTO> ListRectangles();
 
         // Creacion
         [OperationContract]
-        dynamic CreateTriangle(TriangleDTO Triangle);
+        Triangle CreateTriangle(TriangleDTO Triangle);
 
         [OperationContract]
-        dynamic CreateSquare(SquareDTO Square);
+        Square CreateSquare(SquareDTO Square);
         
         [OperationContract]
-        dynamic CreateCircle(CircleDTO Circle);
+        Ring CreateRing(RingDTO Ring);
+
+        [OperationContract]
+        Rectangle CreateRectangle(RectangleDTO Rectangle);
 
         // Consulta
         [OperationContract]
@@ -41,7 +48,11 @@ namespace WebServiceApp
         SquareDTO GetSquareById(int Id);
 
         [OperationContract]
-        CircleDTO GetCircleById(int Id);
+        RingDTO GetRingById(int Id);
+
+        [OperationContract]
+        RectangleDTO GetRectangleById(int Id);
+
     }
 
 

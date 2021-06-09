@@ -14,5 +14,6 @@ namespace WebServiceApp.Models
         public double? SideA { get; set; }
         public double? SideB { get; set; }
         public double? SideC { get; set; }
+        public double? Perimeter { get; set; }
     }
 }

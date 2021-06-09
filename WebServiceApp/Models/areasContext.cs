@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace WebServiceApp.Models
 {
-    public partial class figuresContext : DbContext
+    public partial class areasContext : DbContext
     {
-        public figuresContext()
+        public areasContext()
         {
         }
 
-        public figuresContext(DbContextOptions<figuresContext> options)
+        public areasContext(DbContextOptions<areasContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Circle> Circle { get; set; }
+        public virtual DbSet<Rectangle> Rectangle { get; set; }
+        public virtual DbSet<Ring> Ring { get; set; }
         public virtual DbSet<Square> Square { get; set; }
         public virtual DbSet<Triangle> Triangle { get; set; }
 
@@ -28,19 +29,35 @@ namespace WebServiceApp.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=WIN-UCAFLUQQ626\\SQLEXPRESS;Database=figures;User ID=distdb;Password=David123");
+                optionsBuilder
+                    .UseSqlServer(
+                    "Server=WIN-UCAFLUQQ626\\SQLEXPRESS; Database=areas; User ID=distdb; Password=David123"
+                    );
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Circle>(entity =>
+            modelBuilder.Entity<Rectangle>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Area).HasColumnName("area");
+
+                entity.Property(e => e.Height).HasColumnName("height");
+
+                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
+
+                entity.Property(e => e.Width).HasColumnName("width");
+            });
+
+            modelBuilder.Entity<Ring>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Area).HasColumnName("area");
+
+                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
 
                 entity.Property(e => e.Radius).HasColumnName("radius");
             });
@@ -51,9 +68,9 @@ namespace WebServiceApp.Models
 
                 entity.Property(e => e.Area).HasColumnName("area");
 
-                entity.Property(e => e.Height).HasColumnName("height");
+                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
 
-                entity.Property(e => e.Width).HasColumnName("width");
+                entity.Property(e => e.Side).HasColumnName("side");
             });
 
             modelBuilder.Entity<Triangle>(entity =>
@@ -61,6 +78,8 @@ namespace WebServiceApp.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Area).HasColumnName("area");
+
+                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
 
                 entity.Property(e => e.SideA).HasColumnName("sideA");
 

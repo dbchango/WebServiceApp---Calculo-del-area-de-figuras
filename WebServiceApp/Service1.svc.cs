@@ -14,7 +14,7 @@ namespace WebServiceApp
     // NOTE: para iniciar el Cliente de prueba WCF para probar este servicio, seleccione Service1.svc o Service1.svc.cs en el Explorador de soluciones e inicie la depuración.
     public class Service1 : IService1
     {
-        private readonly figuresContext DBContext = new figuresContext();
+        private readonly areasContext DBContext = new areasContext();
         // Listados implementacion
         public List<TriangleDTO> ListTriangles()
         {
@@ -37,16 +37,15 @@ namespace WebServiceApp
                 {
                     Id = s.Id,
                     Area = s.Area,
-                    Width = s.Width,
-                    Height = s.Height
+                    Side = s.Side
                 }
             ).ToList();
         }
 
-        public List<CircleDTO> ListCircles()
+        public List<RingDTO> ListRings()
         {
-            return DBContext.Circle.Select(
-                s => new CircleDTO
+            return DBContext.Ring.Select(
+                s => new RingDTO
                 {
                     Id = s.Id,
                     Radius = s.Radius,
@@ -55,68 +54,81 @@ namespace WebServiceApp
             ).ToList();
         }
 
+        public List<RectangleDTO> ListRectangles()
+        {
+            return DBContext.Rectangle.Select(
+                s => new RectangleDTO
+                {
+                    Id = s.Id,
+                    Height = s.Height,
+                    Width = s.Width,
+                    Area = s.Area
+                }
+            ).ToList();
+        }
+
         // Creacion
-        public dynamic CreateTriangle(TriangleDTO Triangle)
+        public Triangle CreateTriangle(TriangleDTO Triangle)
         {
-            try
+            double s = ((double)Triangle.SideA + (double)Triangle.SideB + (double)Triangle.SideC) / 2;
+            Triangle.Area = Math.Sqrt(s * (s - (double)Triangle.SideA) * (s - (double)Triangle.SideB) * (s - (double)Triangle.SideC));
+            Triangle.Perimeter = Triangle.SideA + Triangle.SideB + Triangle.SideC;
+            var entity = new Triangle()
             {
-                double s = ((double)Triangle.SideA + (double)Triangle.SideB + (double)Triangle.SideC) / 2;
-                Triangle.Area = Math.Sqrt(s*(s- (double)Triangle.SideA) * (s - (double)Triangle.SideB) * (s - (double)Triangle.SideC));
-                var entity = new Triangle()
-                {
-                    Area = Triangle.Area,
-                    SideA = Triangle.SideA,
-                    SideB = Triangle.SideB,
-                    SideC = Triangle.SideC
-                };
-                DBContext.Triangle.Add(entity);
-                DBContext.SaveChangesAsync();
-                return entity.Area;
-
-            }catch(Exception ex)
-            {
-                return ex.Message;
-            }
+                Area = Triangle.Area,
+                SideA = Triangle.SideA,
+                SideB = Triangle.SideB,
+                SideC = Triangle.SideC,
+                Perimeter = Triangle.Perimeter
+            };
+            DBContext.Triangle.Add(entity);
+            DBContext.SaveChangesAsync();
+            return entity;
         }
 
-        public dynamic CreateSquare(SquareDTO Square)
+        public Square CreateSquare(SquareDTO Square)
         {
-            try
+            Square.Area = Square.Side * Square.Side;
+            Square.Perimeter = 4 * Square.Side;
+            var entity = new Square()
             {
-                Square.Area = Square.Width * Square.Height;
-                var entity = new Square()
-                {
-                    Area = Square.Area,
-                    Height = Square.Height,
-                    Width = Square.Width
-                };
-                DBContext.Square.Add(entity);
-                DBContext.SaveChangesAsync();
-                return entity.Area;
-                
-            }catch(Exception ex)
-            {
-                return ex.Message;
-            }
+                Area = Square.Area,
+                Side = Square.Side,
+                Perimeter = Square.Perimeter
+            };
+            DBContext.Square.Add(entity);
+            DBContext.SaveChangesAsync();
+            return entity;
         }
 
-        public dynamic CreateCircle(CircleDTO Circle)
+        public Ring CreateRing(RingDTO Ring)
         {
-            try
+            Ring.Area = Math.PI * Ring.Radius * Ring.Radius;
+            Ring.Perimeter = 2 * Math.PI * Ring.Radius;
+            var entity = new Ring()
             {
-                Circle.Area = Math.PI * Math.Pow((double)Circle.Radius, 2);
-                var entity = new Circle()
-                {
-                    Area = Circle.Area,
-                    Radius = Circle.Radius
-                };
-                DBContext.Circle.Add(entity);
-                DBContext.SaveChangesAsync();
-                return entity.Area;
-            }catch(Exception ex)
+                Area = Ring.Area,
+                Radius = Ring.Radius,
+                Perimeter = Ring.Perimeter
+            };
+            DBContext.Ring.Add(entity);
+            DBContext.SaveChangesAsync();
+            return entity;
+        }
+        public Rectangle CreateRectangle(RectangleDTO Rectangle)
+        {
+            Rectangle.Area = Rectangle.Height * Rectangle.Width;
+            Rectangle.Perimeter = 2 * Rectangle.Height + 2 * Rectangle.Width;
+            var entity = new Rectangle()
             {
-                return ex.Message;
-            }
+                Area = Rectangle.Area,
+                Height = Rectangle.Height,
+                Width = Rectangle.Width,
+                Perimeter = Rectangle.Perimeter
+            };
+            DBContext.Rectangle.Add(entity);
+            DBContext.SaveChangesAsync();
+            return entity;
         }
 
         public TriangleDTO GetTriangleById(int Id)
@@ -140,20 +152,32 @@ namespace WebServiceApp
                 {
                     Id = s.Id,
                     Area = s.Area,
-                    Height = s.Height,
-                    Width = s.Width
+                    Side = s.Side
                 }
             ).FirstOrDefault(s => s.Id == Id);
         }
 
-        public CircleDTO GetCircleById(int Id)
+        public RingDTO GetRingById(int Id)
         {
-            return DBContext.Circle.Select(
-                s => new CircleDTO
+            return DBContext.Ring.Select(
+                s => new RingDTO
                 {
                     Id = s.Id,
                     Area = s.Area,
                     Radius = s.Radius
+                }
+                ).FirstOrDefault(s => s.Id == Id);
+        }
+
+        public RectangleDTO GetRectangleById(int Id)
+        {
+            return DBContext.Rectangle.Select(
+                s => new RectangleDTO
+                {
+                    Id = s.Id,
+                    Area = s.Area,
+                    Height = s.Height,
+                    Width = s.Width
                 }
                 ).FirstOrDefault(s => s.Id == Id);
         }
