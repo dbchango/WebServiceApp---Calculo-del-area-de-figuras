@@ -184,15 +184,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\RectangleDTO.cs" />
     <Compile Include="DTO\RingDTO.cs" />
-    <Compile Include="DTO\SquareDTO.cs" />
-    <Compile Include="DTO\TriangleDTO.cs" />
     <Compile Include="Models\areasContext.cs" />
-    <Compile Include="Models\Rectangle.cs" />
     <Compile Include="Models\Ring.cs" />
-    <Compile Include="Models\Square.cs" />
-    <Compile Include="Models\Triangle.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
@@ -205,6 +199,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CircleService - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\CircleService - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings2.pubxml" />

@@ -15,43 +15,22 @@ namespace WebServiceApp
     public interface IService1
     {
         // Listado 
-        [OperationContract]
-        List<TriangleDTO> ListTriangles();
 
-        [OperationContract]
-        List<SquareDTO> ListSquares();
 
         [OperationContract]
         List<RingDTO> ListRings();
 
-        [OperationContract]
-        List<RectangleDTO> ListRectangles();
-
         // Creacion
-        [OperationContract]
-        Triangle CreateTriangle(TriangleDTO Triangle);
-
-        [OperationContract]
-        Square CreateSquare(SquareDTO Square);
         
         [OperationContract]
         Ring CreateRing(RingDTO Ring);
 
-        [OperationContract]
-        Rectangle CreateRectangle(RectangleDTO Rectangle);
-
         // Consulta
-        [OperationContract]
-        TriangleDTO GetTriangleById(int ID);
 
-        [OperationContract]
-        SquareDTO GetSquareById(int Id);
 
         [OperationContract]
         RingDTO GetRingById(int Id);
 
-        [OperationContract]
-        RectangleDTO GetRectangleById(int Id);
 
     }
 

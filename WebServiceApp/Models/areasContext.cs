@@ -19,40 +19,23 @@ namespace WebServiceApp.Models
         {
         }
 
-        public virtual DbSet<Rectangle> Rectangle { get; set; }
         public virtual DbSet<Ring> Ring { get; set; }
-        public virtual DbSet<Square> Square { get; set; }
-        public virtual DbSet<Triangle> Triangle { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder
-                    .UseSqlServer(
-                    "Server=WIN-UCAFLUQQ626\\SQLEXPRESS; Database=areas; User ID=distdb; Password=David123"
-                    );
+                optionsBuilder.UseSqlServer("Server=tcp:dbchango.database.windows.net,1433;Initial Catalog=areas;Persist Security Info=False;User ID=dbchango;Password=##David##@1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Rectangle>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Area).HasColumnName("area");
-
-                entity.Property(e => e.Height).HasColumnName("height");
-
-                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
-
-                entity.Property(e => e.Width).HasColumnName("width");
-            });
-
             modelBuilder.Entity<Ring>(entity =>
             {
+                entity.ToTable("ring");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Area).HasColumnName("area");
@@ -60,32 +43,6 @@ namespace WebServiceApp.Models
                 entity.Property(e => e.Perimeter).HasColumnName("perimeter");
 
                 entity.Property(e => e.Radius).HasColumnName("radius");
-            });
-
-            modelBuilder.Entity<Square>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Area).HasColumnName("area");
-
-                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
-
-                entity.Property(e => e.Side).HasColumnName("side");
-            });
-
-            modelBuilder.Entity<Triangle>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Area).HasColumnName("area");
-
-                entity.Property(e => e.Perimeter).HasColumnName("perimeter");
-
-                entity.Property(e => e.SideA).HasColumnName("sideA");
-
-                entity.Property(e => e.SideB).HasColumnName("sideB");
-
-                entity.Property(e => e.SideC).HasColumnName("sideC");
             });
 
             OnModelCreatingPartial(modelBuilder);
